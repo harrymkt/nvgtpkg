@@ -5,7 +5,7 @@ import toml
 import sys
 import requests
 import zipfile
-PACKAGE_INDEX_URL = "https://raw.githubusercontent.com/harrymkt/nvgt-packages/main/assets/index.toml"
+PACKAGE_INDEX_URL = "https://raw.githubusercontent.com/harrymkt/nvgtpkg/main/assets/index.toml"
 packstore = ""
 def load_package_index():
 	"""Fetch the latest package index from the server."""
@@ -15,14 +15,14 @@ def load_package_index():
 	except Exception as e:
 		print(f"Error fetching package index: {e}")
 		return {}
-
 def install_package(args):
 	"""Install an NVGT package by downloading and extracting it."""
 	package_name = args.package_name
 	if package_name == None:
 		print("No package name")
 		sys.exit(1);
-	index = load_package_index()
+	#index = load_package_index()
+	index = ["ej"]
 	if package_name not in index:
 		print(f"Package '{package_name}' not found!")
 		return
@@ -47,9 +47,8 @@ def install_package(args):
 			zip_ref.extractall(f"{packstore}/{package_name}")
 			print(f"Installed '{pindex.get("name", package_name)}' successfully!")
 			os.remove(package_zip)
-	except:
-		print(f"Failed to install '{package_name}'.")
-
+	except Exception as e:
+		print(f"Failed to install '{pindex.get("name", package_name)}'. {e}")
 def list_installed_packages(args):
 	"""List all installed NVGT packages."""
 	l = [d for d in os.listdir(packstore) if os.path.isdir(os.path.join(packstore, d))]
