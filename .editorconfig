@@ -1,0 +1,6 @@
+root = true
+[*.{md,py}]
+  indent_style = tab
+[{*.{toml,yaml,yml,json},.editorconfig}]
+  indent_style = space
+  indent_size = 2
