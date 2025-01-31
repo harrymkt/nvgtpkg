@@ -10,7 +10,7 @@
 {{- if $d }}
 {{- range $k, $v := $d }}
 <h2>{{ $v.name | default $k }}</h2>
-<p><a href="{{ $v.download_url | safeURL }}">Download this package</a></p>
+<p><a href="{{ $v.download_url | safeURL }}">{{ T "pkg_download" ($v.name | default $k) }}</a></p>
 {{- end }}
 
 {{- end }}

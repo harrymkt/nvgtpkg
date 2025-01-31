@@ -3,4 +3,4 @@ packnum:
   zero: "No packages available"
   one: "There is {{ . }} package available"
   other: "There are {{ . }} packages available"
-pkg_download: "Download this package"
+pkg_download: "Download {{ . }}"

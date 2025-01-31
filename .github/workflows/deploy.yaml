@@ -1,10 +1,10 @@
 name: Deploy
 on:
   push:
-    paths: ["archetypes/**", "assets/**", "data/**", "themes/**", "i18n/**", "layouts/**", "static/**", "hugo.yaml"]
+    paths: ["archetypes/**", "assets/**", "content/**", "data/**", "themes/**", "i18n/**", "layouts/**", "static/**", "hugo.yaml"]
     branches: [main]
   pull_request:
-    paths: ["archetypes/**", "assets/**", "data/**", "themes/**", "i18n/**", "layouts/**", "static/**", "hugo.yaml"]
+    paths: ["archetypes/**", "assets/**", "content/**", "data/**", "themes/**", "i18n/**", "layouts/**", "static/**", "hugo.yaml"]
   workflow_dispatch:
 
 env:

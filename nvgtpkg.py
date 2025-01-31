@@ -1,12 +1,12 @@
 import os
+import shutil
 import argparse
 import toml
 import sys
 import requests
 import zipfile
 PACKAGE_INDEX_URL = "https://raw.githubusercontent.com/harrymkt/nvgt-packages/main/assets/index.toml"
-packstore = "C:/nvgt/include"
-
+packstore = ""
 def load_package_index():
 	"""Fetch the latest package index from the server."""
 	try:
@@ -62,6 +62,7 @@ def list_installed_packages(args):
 		print(f"{pg.get("name", package)}")
 if __name__ == "__main__":
 	p = argparse.ArgumentParser(description = "NVGT Package Manager")
+	p.add_argument("-d", "-directory", dest = "directory", help = "Path to NVGT installation directory", default = os.path.dirname(shutil.which("nvgt")))
 	sp = p.add_subparsers(title = "Commands", description= "Available commands")
 	install = sp.add_parser("install", help= "Install a package")
 	install.add_argument("package_name", help = "Name of the package to install")
@@ -69,6 +70,14 @@ if __name__ == "__main__":
 	listpacks = sp.add_parser("list", help = "List installed packages")
 	listpacks.set_defaults(func = list_installed_packages)
 	args = p.parse_args()
+	packstore = args.directory
+	if not os.path.isdir(packstore): packstore = os.path.dirname(args.directory)
+	if not packstore or not os.path.exists(packstore):
+		print("Error, NVGT installation directory cannot be determined")
+		sys.exit(1)
+	elif not os.path.isdir(packstore):
+		print("Error, provided NVGT installation path is not a directory")
+		sys.exit(1)
 	if hasattr(args, "func"):
 		args.func(args)
 	else:
