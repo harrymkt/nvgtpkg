@@ -1,0 +1,3 @@
+[submodule "hguinav"]
+	path = themes/hguinav
+	url = https://github.com/harrymkt/hguinav.git

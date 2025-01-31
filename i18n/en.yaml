@@ -1,0 +1,6 @@
+pkg_heading: "Packages"
+packnum:
+  zero: "No packages available"
+  one: "There is {{ . }} package available"
+  other: "There are {{ . }} packages available"
+pkg_download: "Download this package"

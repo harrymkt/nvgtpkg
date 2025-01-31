@@ -2,7 +2,7 @@ import os
 import toml
 import requests
 import zipfile
-PACKAGE_INDEX_URL = "https://raw.githubusercontent.com/harrymkt/nvgt-packages/main/index.json"
+PACKAGE_INDEX_URL = "https://raw.githubusercontent.com/harrymkt/nvgt-packages/main/assets/index.toml"
 packstore = "C:/nvgt/include"
 
 def load_package_index():

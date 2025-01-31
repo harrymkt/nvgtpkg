@@ -1,0 +1,17 @@
+{{- define "main" }}
+<h1>{{ T "pkg_heading" }}</h1>
+{{- $d := dict }}
+{{- with resources.Get "index.toml" }}
+{{- with . | transform.Unmarshal }}
+{{- $d = . }}
+{{- end }}
+{{- end }}
+<p>{{ T "packnum" ($d | len | default 0) }}</p>
+{{- if $d }}
+{{- range $k, $v := $d }}
+<h2>{{ $v.name | default $k }}</h2>
+<p><a href="{{ $v.download_url | safeURL }}">Download this package</a></p>
+{{- end }}
+
+{{- end }}
+{{- end }}

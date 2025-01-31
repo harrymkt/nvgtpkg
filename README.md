@@ -18,7 +18,7 @@ That's it!
 
 ## Publishing a package
 Once you have created a package you want create a pull request to this repository to publish it.
-First, Edit the `index.toml`, adding your library to the end of the file. Copy the content below for TOML format to edit index.toml. However, first note:
+First, Edit the `assets/index.toml`, adding your library to the end of the file. Copy the content below for TOML format to edit index.toml. However, first note:
 1. `packname` should be replaced your short, friendly package name. No spaces, use dashes.
 ```toml
 [packname]

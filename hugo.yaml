@@ -1,0 +1,8 @@
+baseURL: "https://harrymkt.github.io/nvgtpkg"
+title: "NVGT Package Manager"
+cleanDestinationDir: true
+publishDir: HTML
+enableGitInfo: true
+theme: hguinav
+params:
+  display_site_lastmod: true
