@@ -1,5 +1,7 @@
 import os
+import argparse
 import toml
+import sys
 import requests
 import zipfile
 PACKAGE_INDEX_URL = "https://raw.githubusercontent.com/harrymkt/nvgt-packages/main/assets/index.toml"
@@ -14,8 +16,12 @@ def load_package_index():
 		print(f"Error fetching package index: {e}")
 		return {}
 
-def install_package(package_name):
+def install_package(args):
 	"""Install an NVGT package by downloading and extracting it."""
+	package_name = args.package_name
+	if package_name == None:
+		print("No package name")
+		sys.exit(1);
 	index = load_package_index()
 	if package_name not in index:
 		print(f"Package '{package_name}' not found!")
@@ -44,7 +50,7 @@ def install_package(package_name):
 	except:
 		print(f"Failed to install '{package_name}'.")
 
-def list_installed_packages():
+def list_installed_packages(args):
 	"""List all installed NVGT packages."""
 	l = [d for d in os.listdir(packstore) if os.path.isdir(os.path.join(packstore, d))]
 	if len(l) < 1:
@@ -55,18 +61,15 @@ def list_installed_packages():
 		pg = toml.load(os.path.join(fullp, "package.toml")) if os.path.exists(os.path.join(fullp, "package.toml")) else dict()
 		print(f"{pg.get("name", package)}")
 if __name__ == "__main__":
-	import sys
-	if len(sys.argv) < 2:
-		print("Usage: nvgtpkg <command> [package]")
-		print("install or i, installs a package")
-		print("list or l, lists packages you have installed")
-		sys.exit(1)
-
-	command = sys.argv[1]
-	
-	if (command == "install" or command == "i") and len(sys.argv) > 2:
-		install_package(sys.argv[2])
-	elif command == "list" or command == "l":
-		list_installed_packages()
+	p = argparse.ArgumentParser(description = "NVGT Package Manager")
+	sp = p.add_subparsers(title = "Commands", description= "Available commands")
+	install = sp.add_parser("install", help= "Install a package")
+	install.add_argument("package_name", help = "Name of the package to install")
+	install.set_defaults(func = install_package)
+	listpacks = sp.add_parser("list", help = "List installed packages")
+	listpacks.set_defaults(func = list_installed_packages)
+	args = p.parse_args()
+	if hasattr(args, "func"):
+		args.func(args)
 	else:
-		print("Unknown command!")
+		p.print_help()
