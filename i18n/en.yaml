@@ -4,3 +4,4 @@ packnum:
   one: "There is {{ . }} package available"
   other: "There are {{ . }} packages available"
 pkg_download: "Download {{ . }}"
+pkg_author: "Author"

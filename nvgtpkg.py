@@ -29,7 +29,7 @@ def install_package(args):
 	pindex = index[package_name]
 	package_url = pindex["download_url"]
 	package_zip = f"{packstore}/{package_name}.zip"
-	print(f"Found {pindex.get("name", package_name)}. Downloading...")
+	print(f"Found {pindex.get("name", package_name)} by {pindex["author"]["name"]}. Downloading...")
 	if os.path.exists(package_zip):
 		print("Using cash");
 	else:
@@ -59,7 +59,7 @@ def list_installed_packages(args):
 	for package in l:
 		fullp = os.path.join(packstore, package)
 		pg = toml.load(os.path.join(fullp, "package.toml")) if os.path.exists(os.path.join(fullp, "package.toml")) else dict()
-		print(f"{pg.get("name", package)}")
+		print(f"{pg.get("name", package)} by {pg["author"]["name"]}")
 if __name__ == "__main__":
 	p = argparse.ArgumentParser(description = "NVGT Package Manager")
 	p.add_argument("-d", "-directory", dest = "directory", help = "Path to NVGT installation directory", default = os.path.dirname(shutil.which("nvgt")))

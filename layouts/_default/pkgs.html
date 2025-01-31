@@ -10,6 +10,7 @@
 {{- if $d }}
 {{- range $k, $v := $d }}
 <h2>{{ $v.name | default $k }}</h2>
+<p>{{ T "pkg_author" }}:{{ if $v.author.homepage }}<a href="{{ $v.author.homepage | default "" }}">{{ $v.author.name }}</a>{{ else }}<p>{{ $v.author.name }}</p>{{ end }}</p>
 <p><a href="{{ $v.download_url | safeURL }}">{{ T "pkg_download" ($v.name | default $k) }}</a></p>
 {{- end }}
 

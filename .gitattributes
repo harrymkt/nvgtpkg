@@ -1,6 +1,5 @@
 # Auto detect text files and perform LF normalization
 * text=auto
-*.md linguist-detectable linguist-documentation=false linguist-vendered=false linguist-generated=false
 *.txt linguist-detectable linguist-documentation=false linguist-vendered=false linguist-generated=false
 *.toml linguist-detectable linguist-vendored=false linguist-generated=false linguist-documentation=false
 *.yaml linguist-detectable linguist-vendored=false linguist-generated=false linguist-documentation=false
