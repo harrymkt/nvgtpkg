@@ -21,8 +21,7 @@ def install_package(args):
 	if package_name == None:
 		print("No package name")
 		sys.exit(1);
-	#index = load_package_index()
-	index = ["ej"]
+	index = load_package_index()
 	if package_name not in index:
 		print(f"Package '{package_name}' not found!")
 		return
@@ -45,6 +44,7 @@ def install_package(args):
 	try:
 		with zipfile.ZipFile(package_zip, "r") as zip_ref:
 			zip_ref.extractall(f"{packstore}/{package_name}")
+			zip_ref.close()
 			print(f"Installed '{pindex.get("name", package_name)}' successfully!")
 			os.remove(package_zip)
 	except Exception as e:
@@ -76,6 +76,10 @@ if __name__ == "__main__":
 		sys.exit(1)
 	elif not os.path.isdir(packstore):
 		print("Error, provided NVGT installation path is not a directory")
+		sys.exit(1)
+	packstore = os.path.join(packstore, "include")
+	if not os.path.exists(packstore):
+		print("Error, NVGT has no include directory")
 		sys.exit(1)
 	if hasattr(args, "func"):
 		args.func(args)
