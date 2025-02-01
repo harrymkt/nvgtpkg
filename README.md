@@ -1,5 +1,5 @@
 # NVGT PKG
-A simple package manager for [NVGT](https://nvgt.gg).
+A simple package manager for [NVGT](https://nvgt.gg) audio game engine.
 
 [Visit NVGT Package Manager's Official Website](https://harrymkt.github.io/nvgtpkg)
 
