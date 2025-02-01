@@ -5,8 +5,10 @@ import toml
 import sys
 import requests
 import zipfile
+
 PACKAGE_INDEX_URL = "https://raw.githubusercontent.com/harrymkt/nvgtpkg/main/assets/index.toml"
 packstore = ""
+
 def load_package_index():
 	"""Fetch the latest package index from the server."""
 	try:
@@ -15,6 +17,7 @@ def load_package_index():
 	except Exception as e:
 		print(f"Error fetching package index: {e}")
 		return {}
+
 def install_package(args):
 	"""Install an NVGT package by downloading and extracting it."""
 	package_name = args.package_name
@@ -50,6 +53,7 @@ def install_package(args):
 			os.remove(package_zip)
 	except Exception as e:
 		print(f"Failed to install '{pindex.get("name", package_name)}'. {e}")
+
 def list_installed_packages(args):
 	"""List all installed NVGT packages."""
 	l = [d for d in os.listdir(packstore) if os.path.isdir(os.path.join(packstore, d))]
@@ -60,6 +64,31 @@ def list_installed_packages(args):
 		fullp = os.path.join(packstore, package)
 		pg = toml.load(os.path.join(fullp, "package.toml")) if os.path.exists(os.path.join(fullp, "package.toml")) else dict()
 		print(f"{pg.get("name", package)} by {pg["author"]["name"]}")
+
+def show_package(args):
+	"""Shows information about given installed package if available"""
+	l = [d for d in os.listdir(packstore) if os.path.isdir(os.path.join(packstore, d))]
+	if len(l) < 1:
+		print("No packages installed.")
+		return
+	haspack = False
+	name = args.name
+	for package in l:
+		if package.lower() == args.name.lower():
+			haspack = True
+			name = package
+	if haspack:
+		pg = toml.load(os.path.join(packstore, name, "package.toml")) if os.path.exists(os.path.join(packstore, name, "package.toml")) else dict()
+		print(f"Found {pg.get("name", name)}")
+		if not pg.get("name", name) == name:
+			print("Module name")
+			print(name)
+		if hasattr(pg, "description"):
+			print("Description")
+			print(pg["description"])
+	else:
+		print(f"No package with the term {args.name}")
+
 if __name__ == "__main__":
 	p = argparse.ArgumentParser(description = "NVGT Package Manager")
 	p.add_argument("-d", "-directory", dest = "directory", help = "Path to NVGT installation directory", default = os.path.dirname(shutil.which("nvgt")))
@@ -69,6 +98,9 @@ if __name__ == "__main__":
 	install.set_defaults(func = install_package)
 	listpacks = sp.add_parser("list", help = "List installed packages")
 	listpacks.set_defaults(func = list_installed_packages)
+	showpack = sp.add_parser("show", help = "Shows information about a given installed package")
+	showpack.add_argument("name", help = "The name of the package to search if it is installed")
+	showpack.set_defaults(func = show_package)
 	args = p.parse_args()
 	packstore = args.directory
 	if not os.path.isdir(packstore): packstore = os.path.dirname(args.directory)

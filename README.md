@@ -6,7 +6,7 @@ A simple package manager for [NVGT](https://nvgt.gg) audio game engine.
 NVGT Package Manager uses TOML as formatter, thus any configuration file must use TOML. Format indentation is expected, and must use tab over space.
 
 ## Creating a package
-If you want to create a package, first setup a Git repository. This Git repository is not necessary unless you want to publish to NVGTPKG packages.
+If you want to create a package, first setup a Git repository. This Git repository is not necessary unless you want to publish to NVGTPKG packages easily.
 
 Once you have necessary setups:
 - Create the library files, using include directives, separating them is possible as you want.
@@ -31,14 +31,18 @@ description = ""
 ---
 
 ## Publishing a package
-Once you have created a package you want create a pull request to this repository to publish it.
+Once you have created a package, create a pull request to this repository to publish it.
 
 First, Edit the `assets/index.toml`, adding your library to the end of the file. Copy the content below for TOML format to edit index.toml. However, first note:
 - `packname` should be replaced with your short, friendly package name. No spaces, use dashes.
+- No madder if your package is in a Git repository or not, you must create a downloadable zip file. When creating zip file, it must be in zip (.zip) extension. Also, the zip file must be created one directory root. For example, create a zip file within your package's root directory, for instance, select all, then create zip. In short, the package.toml alongside main.nvgt should be in the first directory.
+
 ```toml
 [packname]
 	# Name can contain spaces
 	name = "Your Package Display Name"
+	# Direct URL to download
+	download_url = "https://example.com/package.zip"
 	# Author information
 	[packname.author]
 		name = "Author Name"
