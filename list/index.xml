@@ -1,12 +1,12 @@
 <?xml version="1.0" encoding="utf-8" standalone="yes"?>
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
-    <title>Home on NVGT Package Manager</title>
-    <link>https://harrymkt.github.io/nvgtpkg/</link>
-    <description>Recent content in Home on NVGT Package Manager</description>
+    <title>Package Index on NVGT Package Manager</title>
+    <link>https://harrymkt.github.io/nvgtpkg/list/</link>
+    <description>Recent content in Package Index on NVGT Package Manager</description>
     <generator>Hugo</generator>
     <language>en</language>
-    <atom:link href="https://harrymkt.github.io/nvgtpkg/index.xml" rel="self" type="application/rss+xml" />
+    <atom:link href="https://harrymkt.github.io/nvgtpkg/list/index.xml" rel="self" type="application/rss+xml" />
     <item>
       <title>script_detect</title>
       <link>https://harrymkt.github.io/nvgtpkg/list/script_detect/</link>
