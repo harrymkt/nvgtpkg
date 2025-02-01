@@ -1,5 +1,8 @@
 {{- define "main" }}
 <h1>{{ T "pkg_heading" }}</h1>
+{{- $fi := os.Stat "assets/index.toml" }}
+{{- $lmd := printf "<script>document.write(ts_to_readable_time(get_timestamp(%q), false, %q, false));</script>" $fi.ModTime "" }}
+<p>{{ T "lastmod_short" $lmd | safeHTML }}</p>
 {{- $d := dict }}
 {{- with resources.Get "index.toml" }}
 {{- with . | transform.Unmarshal }}
@@ -9,9 +12,14 @@
 <p>{{ T "packnum" ($d | len | default 0) }}</p>
 {{- if $d }}
 {{- range $k, $v := $d }}
-<h2>{{ $v.name | default $k }}</h2>
+<details name="pack">
+<summary><h2>{{ $v.name | default $k }}</h2></summary>
 <p>{{ T "pkg_author" }}:{{ if $v.author.homepage }}<a href="{{ $v.author.homepage | default "" }}">{{ $v.author.name }}</a>{{ else }}<p>{{ $v.author.name }}</p>{{ end }}</p>
 <p><a href="{{ $v.download_url | safeURL }}">{{ T "pkg_download" ($v.name | default $k) }}</a></p>
+<pre data-lang="bash">
+nvgtpkg install {{ $k }}
+</pre>
+</details>
 {{- end }}
 
 {{- end }}
