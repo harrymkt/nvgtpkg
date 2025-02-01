@@ -11,7 +11,7 @@ def load_package_index():
 	"""Fetch the latest package index from the server."""
 	try:
 		response = requests.get(PACKAGE_INDEX_URL)
-		return toml.load(response.text) if response.status_code == 200 else {}
+		return toml.loads(response.text) if response.status_code == 200 else {}
 	except Exception as e:
 		print(f"Error fetching package index: {e}")
 		return {}
@@ -39,6 +39,7 @@ def install_package(args):
 		else:
 			f = open(package_zip, "wb")
 			f.write(response.content)
+			f.close()
 	# Extract files
 	print(f"Extracting {pindex.get("name", package_name)}...")
 	try:
