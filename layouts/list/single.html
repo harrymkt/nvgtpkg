@@ -1,0 +1,18 @@
+{{- define "main" }}
+<h1>{{ .Title }}</h1>
+{{- $d := dict }}
+{{- with .Params.toml }}
+{{- $d = . }}
+{{- end }}
+{{- if $d }}
+{{- with $d.description }}
+<p>{{ . }}</p>
+{{- end }}
+<p>{{ T "pkg_author" }}:{{ if $d.author.homepage }}<a href="{{ $d.author.homepage | default "" }}">{{ $d.author.name }}</a>{{ else }}<p>{{ $d.author.name }}</p>{{ end }}</p>
+<p><a href="{{ $d.download_url | safeURL }}">{{ T "pkg_download" .Title }}</a></p>
+<pre data-lang="bash">
+nvgtpkg install {{ $d.short }}
+</pre>
+</details>
+{{- end }}
+{{- end }}

@@ -1,0 +1,19 @@
+{{- $d := dict }}
+{{- with resources.Get "index.toml" }}
+{{- with . | transform.Unmarshal }}
+{{- $d = . }}
+{{- end }}
+{{- end }}
+{{- if $d }}
+{{- range $k, $v := $d }}
+{{- $v = merge $v (dict "short" $k) }}
+{{- $p := dict
+	"kind" "page"
+	"params" (dict "toml" $v)
+	"path" $k
+	"title" ($v.name | default $k)
+	"layout" "pkg"
+}}
+{{- $.AddPage $p }}
+{{- end }}
+{{- end }}

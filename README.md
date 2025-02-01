@@ -19,6 +19,8 @@ That's it!
 ```toml
 # Name can contain spaces
 name = "Your Package Display Name"
+# Optional description
+description = ""
 # Author information
 [author]
 	name = "Author Name"
