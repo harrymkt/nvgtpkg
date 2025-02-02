@@ -1,3 +1,6 @@
+# NVGTPKG uses TOML as its format configuration tool.
 toml
+# NVGTPKG uses Argparse as its command line argument parser.
 argparse
+# NVGTPKG uses Requests library for fetching web data.
 requests

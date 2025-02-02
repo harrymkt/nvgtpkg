@@ -49,3 +49,23 @@ First, Edit the `assets/index.toml`, adding your library to the end of the file.
 		# Optional homepage key that specifies the website, or the email, of the author. If it is email, start with mailto:
 		homepage = "Author_homepage"
 ```
+
+---
+
+## Building NVGTPKG
+If you want to contribute code to NVGTPKG software, you will first know how to build.
+
+To build NVGT Package Manager software:
+- First, make sure you have Python installed.
+- Install the requirements.
+	```bash
+	pip install -r requirements.txt
+	```
+- Install PyInstaller.
+	```bash
+	pip install --upgrade pyinstaller
+	```
+- Lastly, run the following command from the root of the NVGTPKG repository:
+	```bash
+	pyinstaller --onefile --console nvgtpkg.py
+	```

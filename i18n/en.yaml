@@ -1,6 +1,8 @@
 pkg_heading: "Packages"
 pkg_download: "Download {{ . }}"
 pkg_author: "Author"
+pkg_install: "Install"
+pkg_use: "Use this package"
 packnum:
   zero: "No packages available"
   one: "There is {{ . }} package available"

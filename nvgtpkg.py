@@ -81,10 +81,12 @@ def show_package(args):
 		pg = toml.load(os.path.join(packstore, name, "package.toml")) if os.path.exists(os.path.join(packstore, name, "package.toml")) else dict()
 		print(f"Found {pg.get("name", name)}")
 		if not pg.get("name", name) == name:
-			print("Module name")
+			print("Module name:")
 			print(name)
+		print("Author:")
+		print(pg["author"]["name"])
 		if hasattr(pg, "description"):
-			print("Description")
+			print("Description:")
 			print(pg["description"])
 	else:
 		print(f"No package with the term {args.name}")
