@@ -3,7 +3,7 @@ A simple package manager for [NVGT](https://nvgt.gg) audio game engine.
 
 [Visit NVGT Package Manager's Official Website](https://harrymkt.github.io/nvgtpkg)
 
-NVGT Package Manager uses TOML as formatter, thus any configuration file must use TOML. Format indentation is expected, and must use tab over space.
+NVGT Package Manager uses [TOML](https://toml.io/en/) as formatter, thus any configuration file must use TOML. Format indentation is expected, and must use tab over space.
 
 ## Creating a package
 If you want to create a package, first setup a Git repository. This Git repository is not necessary unless you want to publish to NVGTPKG packages easily.
@@ -35,7 +35,7 @@ Once you have created a package, create a pull request to this repository to pub
 
 First, Edit the `assets/index.toml`, adding your library to the end of the file. Copy the content below for TOML format to edit index.toml. However, first note:
 - `packname` should be replaced with your short, friendly package name. No spaces, use dashes.
-- No madder if your package is in a Git repository or not, you must create a downloadable zip file. When creating zip file, it must be in zip (.zip) extension. Also, the zip file must be created one directory root. For example, create a zip file within your package's root directory, for instance, select all, then create zip. In short, the package.toml alongside main.nvgt should be in the first directory.
+- No madder if your package is in a Git repository or not, you must create a downloadable zip file. When creating zip file, it must be in zip (.zip) extension. Also, the zip file must be created one directory root. For example, create a zip file within your package's root directory, for instance, select all, then create zip. In short, the package.toml alongside main.nvgt should be in the first directory. On GitHub, you can release with the zip file and use the download link of the zip file.
 
 ```toml
 [packname]
@@ -56,16 +56,16 @@ First, Edit the `assets/index.toml`, adding your library to the end of the file.
 If you want to contribute code to NVGTPKG software, you will first know how to build.
 
 To build NVGT Package Manager software:
-- First, make sure you have Python installed.
+- First, make sure you have [Python](https://www.python.org/) 3 and above installed.
 - Install the requirements.
 	```bash
-	pip install -r requirements.txt
+pip install -r requirements.txt
 	```
 - Install PyInstaller.
 	```bash
-	pip install --upgrade pyinstaller
+pip install --upgrade pyinstaller
 	```
 - Lastly, run the following command from the root of the NVGTPKG repository:
 	```bash
-	pyinstaller --onefile --console nvgtpkg.py
+pyinstaller --onefile --console nvgtpkg.py
 	```

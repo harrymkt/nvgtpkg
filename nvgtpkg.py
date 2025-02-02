@@ -26,15 +26,16 @@ def install_package(args):
 		sys.exit(1);
 	index = load_package_index()
 	if package_name not in index:
-		print(f"Package '{package_name}' not found!")
+		print(f"Package '{package_name}' does not exist in package index")
 		return
 	pindex = index[package_name]
 	package_url = pindex["download_url"]
 	package_zip = f"{packstore}/{package_name}.zip"
-	print(f"Found {pindex.get("name", package_name)} by {pindex["author"]["name"]}. Downloading...")
+	print(f"Found {pindex.get("name", package_name)} by {pindex["author"]["name"]}.")
 	if os.path.exists(package_zip):
 		print("Using cash");
 	else:
+		print("Downloading...")
 		response = requests.get(package_url)
 		if not response.status_code == 200:
 			print(f"Failed to download '{package_name}'.")
@@ -89,7 +90,7 @@ def show_package(args):
 			print("Description:")
 			print(pg["description"])
 	else:
-		print(f"No package with the term {args.name}")
+		print(f"No package with the term {args.name} found in your installed packages.")
 
 if __name__ == "__main__":
 	p = argparse.ArgumentParser(description = "NVGT Package Manager")
