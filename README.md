@@ -1,9 +1,14 @@
 # NVGT PKG
-A simple package manager for [NVGT](https://nvgt.gg) audio game engine.
+A simple, open source command line package manager for [NVGT](https://nvgt.gg) audio game engine.
 
 [Visit NVGT Package Manager's Official Website](https://harrymkt.github.io/nvgtpkg)
 
 NVGT Package Manager uses [TOML](https://toml.io/en/) as formatter, thus any configuration file must use TOML. Format indentation is expected, and must use tab over space.
+
+## Usage
+To use the package manager software, run `nvgtpkg` and it will display help. To get help for a command you can run `nvgtpkg <command> -h` or `nvgtpkg <command> --help`.
+
+Note that if you are using non compiled version you may run `nvgtpkg.py` instead of `nvgtpkg`.
 
 ## Creating a package
 If you want to create a package, first setup a Git repository. This Git repository is not necessary unless you want to publish to NVGTPKG packages easily.
@@ -59,13 +64,13 @@ To build NVGT Package Manager software:
 - First, make sure you have [Python](https://www.python.org/) 3 and above installed.
 - Install the requirements.
 	```bash
-pip install -r requirements.txt
+	pip install -r requirements.txt
 	```
 - Install PyInstaller.
 	```bash
-pip install --upgrade pyinstaller
+	pip install --upgrade pyinstaller
 	```
 - Lastly, run the following command from the root of the NVGTPKG repository:
 	```bash
-pyinstaller --onefile --console nvgtpkg.py
+	pyinstaller --onefile --console nvgtpkg.py
 	```

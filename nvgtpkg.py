@@ -80,17 +80,34 @@ def show_package(args):
 			name = package
 	if haspack:
 		pg = toml.load(os.path.join(packstore, name, "package.toml")) if os.path.exists(os.path.join(packstore, name, "package.toml")) else dict()
-		print(f"Found {pg.get("name", name)}")
-		if not pg.get("name", name) == name:
-			print("Module name:")
-			print(name)
-		print("Author:")
-		print(pg["author"]["name"])
-		if hasattr(pg, "description"):
-			print("Description:")
-			print(pg["description"])
+		package_info(name, pg)
 	else:
 		print(f"No package with the term {args.name} found in your installed packages.")
+
+def package_info(name, pg):
+	if name == None or pg == None: return
+	print(f"Found {pg.get("name", name)}")
+	if not pg.get("name", name) == name:
+		print("Module name:")
+		print(name)
+	print("Author:")
+	print(pg["author"]["name"])
+	if pg["description"]:
+		print("Description:")
+		print(pg["description"])
+
+def search_package(args):
+	package_name = args.name
+	if package_name == None:
+		print("No package name")
+		sys.exit(1);
+	print("Searching for package")
+	index = load_package_index()
+	if package_name not in index:
+		print(f"Package '{package_name}' does not exist in package index")
+		return
+	pindex = index[package_name]
+	package_info(package_name, pindex)
 
 if __name__ == "__main__":
 	p = argparse.ArgumentParser(description = "NVGT Package Manager")
@@ -104,6 +121,9 @@ if __name__ == "__main__":
 	showpack = sp.add_parser("show", help = "Shows information about a given installed package")
 	showpack.add_argument("name", help = "The name of the package to search if it is installed")
 	showpack.set_defaults(func = show_package)
+	searchpack = sp.add_parser("search", help = "Searches a package online without any installation")
+	searchpack.add_argument("name", help = "The name of the package to search for")
+	searchpack.set_defaults(func = search_package)
 	args = p.parse_args()
 	packstore = args.directory
 	if not os.path.isdir(packstore): packstore = os.path.dirname(args.directory)
