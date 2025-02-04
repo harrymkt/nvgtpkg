@@ -5,11 +5,12 @@
 {{- $d = . }}
 {{- end }}
 {{- if $d }}
-{{- with $d.description }}
+{{- $v := $d.value }}
+{{- with $v.description }}
 <p>{{ . }}</p>
 {{- end }}
-<p>{{ T "pkg_author" }}:{{ if $d.author.homepage }}<a href="{{ $d.author.homepage | default "" }}">{{ $d.author.name }}</a>{{ else }}<p>{{ $d.author.name }}</p>{{ end }}</p>
-<p><a href="{{ $d.download_url | safeURL }}">{{ T "pkg_download" .Title }}</a></p>
+<p>{{ T "pkg_author" }}:{{ if $v.author.homepage }}<a href="{{ $v.author.homepage | default "" }}">{{ $v.author.name }}</a>{{ else }}<p>{{ $v.author.name }}</p>{{ end }}</p>
+<p><a href="{{ $v.download_url | safeURL }}">{{ T "pkg_download" .Title }}</a></p>
 <p>{{ T "pkg_install" }}</p>
 <pre data-lang="bash">
 nvgtpkg install {{ $d.short }}

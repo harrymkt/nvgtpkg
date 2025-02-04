@@ -1,17 +1,16 @@
+{{- range resources.Match "pkgs/*.toml" }}
+{{- $tt := replace .Title "/pkgs/" "" }}
+{{- $tt = replace $tt ".toml" "" }}
 {{- $d := dict }}
-{{- with resources.Get "index.toml" }}
-{{- with . | transform.Unmarshal }}
-{{- $d = . }}
-{{- end }}
+{{- with $vv := . | transform.Unmarshal }}
+{{- $d = $vv }}
 {{- end }}
 {{- if $d }}
-{{- range $k, $v := $d }}
-{{- $v = merge $v (dict "short" $k) }}
 {{- $p := dict
 	"kind" "page"
-	"params" (dict "toml" $v)
-	"path" $k
-	"title" ($v.name | default $k)
+	"params" (dict "toml" (dict "value" $d "short" $tt))
+	"path" $tt
+	"title" ($d.name | default $tt)
 	"layout" "pkg"
 }}
 {{- $.AddPage $p }}

@@ -8,21 +8,15 @@
 {{- end }}
 {{- define "main" }}
 <h1>{{ T "pkg_heading" }}</h1>
-{{- $fi := os.Stat "assets/index.toml" }}
+{{- $fi := os.Stat "assets/pkgs/" }}
 {{- $lmd := printf "<script>document.write(ts_to_readable_time(get_timestamp(%q), false, %q, false));</script>" $fi.ModTime "" }}
 <p>{{ T "lastmod_short" $lmd | safeHTML }}</p>
-{{- $d := dict }}
-{{- with resources.Get "index.toml" }}
-{{- with . | transform.Unmarshal }}
-{{- $d = . }}
-{{- end }}
-{{- end }}
-<p>{{ T "packnum" ($d | len | default 0) }}</p>
 {{- $paginator := partial "paginate.html" . }}
+<p>{{ T "packnum" ($paginator.Pages | len | default 0) }}</p>
 {{- range $paginator.Pages }}
 <div>
 <h2><a href="{{ .RelPermalink }}">{{ .LinkTitle }}</a></h2>
-{{- $v := .Params.toml }}
+{{- $v := .Params.toml.value }}
 {{- with $v.description }}
 <p>{{ . }}</p>
 {{- end }}

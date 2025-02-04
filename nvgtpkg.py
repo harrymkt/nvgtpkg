@@ -7,7 +7,7 @@ import requests
 import zipfile
 import fnmatch
 
-package_path = "assets/pkgs/"
+package_path = "assets/pkgs"
 packstore = ""
 
 def install_package(args):
@@ -16,18 +16,17 @@ def install_package(args):
 	if package_name == None:
 		print("No package name")
 		return
-	data = list_files_in_repo("harrymkt", "nvgtpkg", package_path, "*.toml")
+	data = get_url(f"https://raw.githubusercontent.com/harrymkt/nvgtpkg/main/{package_path}/{package_name}.toml")
 	if isinstance(data, Exception):
-		print(f"Failed to retrieve packages. {data}")
+		if data == "":
+			print("Package not found")
+		else:
+			print(f"Failed to retrieve package. {data}")
 		return
 	elif data == None:
-		print("No packages found online")
+		print("No package data")
 		return
-	index = [item.replace(f"{package_path}", "") for item in data]
-	if package_name not in index:
-		print(f"Package '{package_name}' does not exist in package index")
-		return
-	pindex = index[package_name]
+	pindex = toml.loads(data)
 	package_url = pindex["download_url"]
 	package_zip = f"{packstore}/{package_name}.zip"
 	print(f"Found {pindex.get("name", package_name)} by {pindex["author"]["name"]}.")
@@ -101,11 +100,17 @@ def search_package(args):
 		print("No package name")
 		sys.exit(1);
 	print("Searching for package")
-	index = load_package_index()
-	if package_name not in index:
-		print(f"Package '{package_name}' does not exist in package index")
+	data = get_url(f"https://raw.githubusercontent.com/harrymkt/nvgtpkg/main/{package_path}/{package_name}.toml")
+	if isinstance(data, Exception):
+		if data == "":
+			print("Package not found")
+		else:
+			print(f"Failed to retrieve package. {data}")
 		return
-	pindex = index[package_name]
+	elif data == None:
+		print("No package data")
+		return
+	pindex = toml.loads(data)
 	package_info(package_name, pindex)
 
 def list_files_in_repo(owner, repo, path, pattern, recursive = False):

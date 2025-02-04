@@ -22,10 +22,12 @@ That's it!
 
 ### content for package.toml
 ```toml
-# Name can contain spaces
+# Optional Name. can contain spaces
 name = "Your Package Display Name"
 # Optional description
 description = ""
+# Direct URL to download, only required if you want to publish the package.
+download_url = "https://example.com/package.zip"
 # Author information
 [author]
 	name = "Author Name"
@@ -36,24 +38,9 @@ description = ""
 ---
 
 ## Publishing a package
-Once you have created a package, create a pull request to this repository to publish it.
-
-First, Edit the `assets/index.toml`, adding your library to the end of the file. Copy the content below for TOML format to edit index.toml. However, first note:
-- `packname` should be replaced with your short, friendly package name. No spaces, use dashes.
-- No madder if your package is in a Git repository or not, you must create a downloadable zip file. When creating zip file, it must be in zip (.zip) extension. Also, the zip file must be created one directory root. For example, create a zip file within your package's root directory, for instance, select all, then create zip. In short, the package.toml alongside main.nvgt should be in the first directory. On GitHub, you can release with the zip file and use the download link of the zip file.
-
-```toml
-[packname]
-	# Name can contain spaces
-	name = "Your Package Display Name"
-	# Direct URL to download
-	download_url = "https://example.com/package.zip"
-	# Author information
-	[packname.author]
-		name = "Author Name"
-		# Optional homepage key that specifies the website, or the email, of the author. If it is email, start with mailto:
-		homepage = "Author_homepage"
-```
+Once you have created a package, create a pull request to this repository to publish it with the following changes to this repository:
+- First, Copy your package's package.toml to assets/pkgs.
+- Next, rename the file as your package short name. A package short name cannot contain spaces, and must use underlines or dashes.
 
 ---
 
