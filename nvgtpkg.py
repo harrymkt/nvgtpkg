@@ -5,26 +5,25 @@ import toml
 import sys
 import requests
 import zipfile
+import fnmatch
 
-PACKAGE_INDEX_URL = "https://raw.githubusercontent.com/harrymkt/nvgtpkg/main/assets/index.toml"
+package_path = "assets/pkgs/"
 packstore = ""
-
-def load_package_index():
-	"""Fetch the latest package index from the server."""
-	try:
-		response = requests.get(PACKAGE_INDEX_URL)
-		return toml.loads(response.text) if response.status_code == 200 else {}
-	except Exception as e:
-		print(f"Error fetching package index: {e}")
-		return {}
 
 def install_package(args):
 	"""Install an NVGT package by downloading and extracting it."""
 	package_name = args.package_name
 	if package_name == None:
 		print("No package name")
-		sys.exit(1);
-	index = load_package_index()
+		return
+	data = list_files_in_repo("harrymkt", "nvgtpkg", package_path, "*.toml")
+	if isinstance(data, Exception):
+		print(f"Failed to retrieve packages. {data}")
+		return
+	elif data == None:
+		print("No packages found online")
+		return
+	index = [item.replace(f"{package_path}", "") for item in data]
 	if package_name not in index:
 		print(f"Package '{package_name}' does not exist in package index")
 		return
@@ -108,6 +107,35 @@ def search_package(args):
 		return
 	pindex = index[package_name]
 	package_info(package_name, pindex)
+
+def list_files_in_repo(owner, repo, path, pattern, recursive = False):
+	"""Lists files in a GitHub repository matching a given pattern."""
+	url = f"https://api.github.com/repos/{owner}/{repo}/contents/{path}"
+	try:
+		response = requests.get(url)
+		if not response.status_code == 200:
+			return Exception()
+		contents = response.json()
+		matching_files = []
+		for item in contents:
+			if item["type"] == "file":
+				if fnmatch.fnmatch(item["name"], pattern):
+					matching_files.append(item["path"])
+			elif recursive and item["type"] == "dir": # Handle subdirectories recursively
+				matching_files.extend(list_files_in_repo(owner, repo, item["path"], pattern, recursive)) # Recursive call
+		return matching_files
+
+	except Exception as e:
+		return e
+
+def get_url(url):
+	try:
+		response = requests.get(url)
+		if not response.status_code == 200:
+			return Exception()
+		return response.text
+	except Exception as e:
+		return e
 
 if __name__ == "__main__":
 	p = argparse.ArgumentParser(description = "NVGT Package Manager")

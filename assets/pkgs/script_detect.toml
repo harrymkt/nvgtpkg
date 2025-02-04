@@ -1,0 +1,5 @@
+description = "A script to determine NVGT or executable to run"
+download_url = "https://harrymkt.github.io/nvgtpkg/script_detect.zip"
+[script_detect.author]
+	name = "Harry Min Khant"
+	homepage = "https://harrymkt.github.io"
