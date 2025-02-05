@@ -112,16 +112,16 @@ def search_package(args):
 	if package_name == None:
 		print("No package name")
 		sys.exit(1);
-	print("Searching for package")
+	print(f"Searching for package {package_name}")
 	data = get_url(f"https://raw.githubusercontent.com/harrymkt/nvgtpkg/main/{package_path}/{package_name}.toml")
 	if isinstance(data, Exception):
 		if data == "":
-			print("Package not found")
+			print(f"Package not found {package_name}")
 		else:
-			print(f"Failed to retrieve package. {data}")
+			print(f"Failed to retrieve package {package_name}. {data}")
 		return
 	elif data == None:
-		print("No package data")
+		print(f"No package data for '{package_name}' found")
 		return
 	pindex = toml.loads(data)
 	package_info(package_name, pindex)

@@ -1,8 +1,5 @@
-# Optional description
 description = "A library to interact with TOML data"
-# Direct URL to download, only required if you want to publish the package.
 download_url = "https://harrymkt.github.io/nvgtpkg/files/toml.zip"
-# Author information
 [author]
 	name = "Harry Min Khant"
 	homepage = "https://harrymkt.github.io"
