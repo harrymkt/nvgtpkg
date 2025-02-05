@@ -1,3 +1,5 @@
+Samples/**/*.zip
+Samples/*.zip
 HTML
 tests/
 # Byte-compiled / optimized / DLL files

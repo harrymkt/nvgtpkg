@@ -16,13 +16,19 @@ If you want to create a package, first setup a Git repository. This Git reposito
 Once you have necessary setups:
 - Create the library files, using include directives, separating them is possible as you want.
 - `main.nvgt` should be in the root directory of the package folder. This file is used as an include starting file for users who will include `#include "package_name/main.nvgt"`
-- Next, add `package.toml` with the TOML format. Content that you can copy will be provided below.
+- Next, add `package.toml` with the TOML format. Content that you can copy will be provided below. You can also use the package editor to create and move the file to your package directory.
+
+If you want to use the package editor, just install the TOML package by running this command:
+```bash
+nvgtpkg install toml
+```
 
 That's it!
 
 ### content for package.toml
+Note: You can also use the package editor script to create and manage packs, and then move the file to the directory you want, for instance, assets/pkgs to publish on this repository, or as package.toml in your package directory for project metadata.
 ```toml
-# Optional Name. can contain spaces
+# Name. can contain spaces
 name = "Your Package Display Name"
 # Optional description
 description = ""
