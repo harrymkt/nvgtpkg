@@ -14,5 +14,8 @@
     <priority>0</priority>
   </url><url>
     <loc>https://harrymkt.github.io/nvgtpkg/tags/</loc>
+  </url><url>
+    <loc>https://harrymkt.github.io/nvgtpkg/list/toml/</loc>
+    <priority>0</priority>
   </url>
 </urlset>

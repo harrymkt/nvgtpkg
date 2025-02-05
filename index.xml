@@ -14,5 +14,12 @@
       <guid>https://harrymkt.github.io/nvgtpkg/list/script_detect/</guid>
       <description></description>
     </item>
+    <item>
+      <title>toml</title>
+      <link>https://harrymkt.github.io/nvgtpkg/list/toml/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      <guid>https://harrymkt.github.io/nvgtpkg/list/toml/</guid>
+      <description></description>
+    </item>
   </channel>
 </rss>
