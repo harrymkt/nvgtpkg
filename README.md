@@ -18,9 +18,9 @@ Once you have necessary setups:
 - `main.nvgt` should be in the root directory of the package folder. This file is used as an include starting file for users who will include `#include "package_name/main.nvgt"`
 - Next, add `package.toml` with the TOML format. Content that you can copy will be provided below. You can also use the package editor to create and move the file to your package directory.
 
-If you want to use the package editor, just install the TOML package by running this command:
+If you want to use the package editor, just install the NVGT required packages by running this command:
 ```bash
-nvgtpkg install toml
+nvgtpkg install -r "nvgtpkgs.txt"
 ```
 
 That's it!

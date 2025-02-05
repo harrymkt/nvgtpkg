@@ -13,6 +13,8 @@
 <p>{{ . }}</p>
 {{- end }}
 <p>{{ T "pkg_author" }}:{{ if $v.author.homepage }}<a href="{{ $v.author.homepage | default "" }}">{{ $v.author.name }}</a>{{ else }}<p>{{ $v.author.name }}</p>{{ end }}</p>
+{{- $mt := printf "<script>document.write(ts_to_readable_time(get_timestamp(%q), false, %q, false));</script>" .Lastmod "" }}
+<p>{{ T "lastmod_short" $mt | safeHTML }}</p>
 <p><a href="{{ $v.download_url | safeURL }}">{{ T "pkg_download" .Title }}</a></p>
 <p>{{ T "pkg_install" }}</p>
 <pre data-lang="bash">

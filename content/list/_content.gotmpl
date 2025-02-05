@@ -1,6 +1,7 @@
 {{- range resources.Match "pkgs/*.toml" }}
 {{- $tt := replace .Title "/pkgs/" "" }}
 {{- $tt = replace $tt ".toml" "" }}
+{{- $f := os.Stat (printf "assets/pkgs/%s.toml" $tt) }}
 {{- $d := dict }}
 {{- with $vv := . | transform.Unmarshal }}
 {{- $d = $vv }}
@@ -8,6 +9,7 @@
 {{- if $d }}
 {{- $p := dict
 	"kind" "page"
+	"dates" (dict "lastmod" $f.ModTime)
 	"params" (dict "toml" (dict "value" $d "short" $tt))
 	"path" $tt
 	"title" ($d.name | default $tt)

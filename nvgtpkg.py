@@ -10,18 +10,17 @@ import fnmatch
 package_path = "assets/pkgs"
 packstore = ""
 
-def install_package(args):
+def install_package(package_name):
 	"""Install an NVGT package by downloading and extracting it."""
-	package_name = args.package_name
 	if package_name == None:
 		print("No package name")
 		return
 	data = get_url(f"https://raw.githubusercontent.com/harrymkt/nvgtpkg/main/{package_path}/{package_name}.toml")
 	if isinstance(data, Exception):
 		if data == "":
-			print("Package not found")
+			print(f"Package {package_name} not found")
 		else:
-			print(f"Failed to retrieve package. {data}")
+			print(f"Failed to retrieve package {package_name}. {data}")
 		return
 	elif data == None:
 		print("No package data")
@@ -52,6 +51,20 @@ def install_package(args):
 			os.remove(package_zip)
 	except Exception as e:
 		print(f"Failed to install '{pindex.get("name", package_name)}'. {e}")
+
+def install_packages(args):
+	packages = args.packages
+	if args.fn:
+		for x in args.fn:
+			x = x.strip()
+			if x.startswith("#"): continue
+			packages.append(x)
+	if len(args.packages) < 1:
+		print("No packages provided")
+		return
+	print(f"Trying to install {len(packages)} packages: {", ".join(packages)}")
+	for p in args.packages:
+		install_package(p)
 
 def list_installed_packages(args):
 	"""List all installed NVGT packages."""
@@ -147,8 +160,9 @@ if __name__ == "__main__":
 	p.add_argument("-d", "-directory", dest = "directory", help = "Path to NVGT installation directory", default = os.path.dirname(shutil.which("nvgt")))
 	sp = p.add_subparsers(title = "Commands", description= "Available commands")
 	install = sp.add_parser("install", help= "Install a package")
-	install.add_argument("package_name", help = "Name of the package to install")
-	install.set_defaults(func = install_package)
+	install.add_argument("-r", dest = "fn", help = "The file name to read the packages from", type = argparse.FileType("r"))
+	install.add_argument("packages", help = "Names of the packages to install", action = "extend", nargs = "*")
+	install.set_defaults(func = install_packages)
 	listpacks = sp.add_parser("list", help = "List installed packages")
 	listpacks.set_defaults(func = list_installed_packages)
 	showpack = sp.add_parser("show", help = "Shows information about a given installed package")

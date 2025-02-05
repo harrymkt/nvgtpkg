@@ -1,7 +1,7 @@
 class toml {
 	toml_section@[] sections(0);
 	toml() {
-		this.initialize_section();
+		this.initialize_section(create = true);
 	}
 	bool load(string filename) {
 		file f;
@@ -20,7 +20,7 @@ class toml {
 		this.parse(str);
 		return this.sections.length() > 0;
 	}
-	toml_section@ initialize_section(string name = "", bool create = true) {
+	toml_section@ initialize_section(string name = "", bool create = false) {
 		if (name == "" && this.sections.length() < 1 && create) {
 			this.sections.insert_last(toml_section(name));
 			return @this.sections[0];
@@ -38,7 +38,7 @@ class toml {
 	}
 	void parse(string d) {
 		this.sections.resize(0);
-		toml_section@ t = this.initialize_section("");
+		toml_section@ t = this.initialize_section("", true);
 		d.replace_this("\r\n", "\n");
 		string[] lines = d.split("\n");
 		if (lines.length() < 1) return;
@@ -66,7 +66,7 @@ class toml {
 			if (key.starts_with("[") && key.ends_with("]")) {
 				string name = "";
 				if (key.length() > 2) name = key.slice(1, key.length() - 1);
-				@t = this.initialize_section(name);
+				@t = this.initialize_section(name, true);
 				continue;
 			}
 			//if (value == "") continue;
@@ -108,17 +108,14 @@ class toml {
 		}
 		return final;
 	}
-	var@ get(string section, string key, var@ def = null) {
-		if (this.sections.length() < 1) return def;
-		for (uint a = 0; a < this.sections.length(); a++) {
-			toml_section@ s = @this.sections[a];
-			if (s.name == section) return s.get(key, def);
-		}
-		return def;
+	var@ get(string section, string key = "", var@ def = null) {
+		toml_section@ s = this.initialize_section(section);
+		if (@s == null) return def;
+		return s.get(key, def);
 	}
-	void set(string section, string key = "", any@ value = null) {
-		toml_section@ t = this.initialize_section(section);
-		if (@t != null && key != "" && @value != null) t.set(key, value);
+	bool set(string section, string key = "", any@ value = null) {
+		toml_section@ t = this.initialize_section(section, true);
+		return @t != null && key != "" && @value != null && t.set(key, value);
 	}
 	int get_section_index(string section) property {
 		if (this.sections.length() < 1) return -1;
@@ -128,7 +125,7 @@ class toml {
 		return -1;
 	}
 	bool remove(string section, string key = "") {
-		toml_section@ t = this.initialize_section(section, false);
+		toml_section@ t = this.initialize_section(section);
 		if (@t == null) return false;
 		if (key != "") return t.remove(key);
 		int x = this.section_index[t.name];
@@ -156,8 +153,10 @@ class toml_section {
 		else r = false;
 		return r;
 	}
-	void set(string key, any@ value) {
-		if (this.add(key, value)) this.knames.insert_last(key);
+	bool set(string key, any@ value) {
+		if (!this.add(key, value)) return false;
+		this.knames.insert_last(key);
+		return true;
 	}
 	string[] get_keys() property {
 		return this.knames;
