@@ -10,6 +10,9 @@ To use the package manager software, run `nvgtpkg` and it will display help. To 
 
 Note that if you are using non compiled version you may run `nvgtpkg.py` instead of `nvgtpkg`.
 
+## License
+NVGT Package Manager is licensed under the terms of the MIT license.
+
 ## Creating a package
 If you want to create a package, first setup a Git repository. This Git repository is not necessary unless you want to publish to NVGTPKG packages easily.
 
