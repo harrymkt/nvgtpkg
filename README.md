@@ -70,3 +70,8 @@ To build NVGT Package Manager software:
 	```bash
 	pyinstaller --onefile --console nvgtpkg.py
 	```
+
+## Contributing
+Contributions to NVGTPKG project are welcome, but please note the following things first:
+- Contributions to this project are expected to follow the [contributing guidelines](.github/CONTRIBUTING.md).
+- The NVGTPKG project is licensed under the terms of the MIT license. You may add credits to your contributed parts and scripts, but the general copyright notice is to remain the same.

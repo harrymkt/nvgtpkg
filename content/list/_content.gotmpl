@@ -9,7 +9,8 @@
 {{- if $d }}
 {{- $p := dict
 	"kind" "page"
-	"dates" (dict "lastmod" $f.ModTime)
+	"dates" (dict "lastmod" $f.ModTime "date" $f.ModTime)
+	"lastmod" $f.ModTime
 	"params" (dict "toml" (dict "value" $d "short" $tt))
 	"path" $tt
 	"title" ($d.name | default $tt)
