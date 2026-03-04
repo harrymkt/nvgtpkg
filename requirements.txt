@@ -1,4 +1,2 @@
-# NVGTPKG uses TOML as its format configuration tool.
-toml
 # NVGTPKG uses Requests library for fetching web data.
 requests

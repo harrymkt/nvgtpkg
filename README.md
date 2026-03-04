@@ -1,77 +1,51 @@
 # NVGT PKG
-A simple, open source command line package manager for [NVGT](https://nvgt.gg) audio game engine.
+A simple, open source command line package manager for [NVGT](https://nvgt.dev) audio game engine.
 
 [Visit NVGT Package Manager's Official Website](https://harrymkt.github.io/nvgtpkg)
 
-NVGT Package Manager uses [TOML](https://toml.io/en/) as formatter, thus any configuration file must use TOML. Format indentation is expected, and must use tab over space.
+NVGT Package Manager uses **JSON** as its formatter; therefore, all configuration files must use the `.json` extension. Standard JSON syntax is required (e.g., keys and strings must be enclosed in double quotes).
 
 ## Usage
-To use the package manager software, run `nvgtpkg` and it will display help. To get help for a command you can run `nvgtpkg <command> -h` or `nvgtpkg <command> --help`.
+To use the package manager software, run `nvgtpkg` to display the help menu. To get help for a specific command, run `nvgtpkg <command> -h` or `nvgtpkg <command> --help`.
 
-Note that if you are using non compiled version you may run `nvgtpkg.py` instead of `nvgtpkg`.
+If you are using the non-compiled version, run `python nvgtpkg.py` instead of the executable.
 
 ## License
 NVGT Package Manager is licensed under the terms of the MIT license.
 
 ## Creating a package
-If you want to create a package, first setup a Git repository. This Git repository is not necessary unless you want to publish to NVGTPKG packages easily.
+To create a package for the NVGT Package Manager:
+- Create your library files using include directives.
+- Ensure `main.nvgt` is in the root directory of the package folder. Users will include your package via `#include "package_name/main.nvgt"`.
+- Add a `package.json` file in the JSON format to your root directory.
 
-Once you have necessary setups:
-- Create the library files, using include directives, separating them is possible as you want.
-- `main.nvgt` should be in the root directory of the package folder. This file is used as an include starting file for users who will include `#include "package_name/main.nvgt"`
-- Next, add `package.toml` with the TOML format. Content that you can copy will be provided below. You can also use the package editor to create and move the file to your package directory.
-
-If you want to use the package editor, just install the NVGT required packages by running this command:
-```bash
-nvgtpkg install -r "nvgtpkgs.txt"
+### Content for package.json
+Use the following structure for your metadata:
+```json
+{
+  "name": "Your Package Display Name",
+  "description": "Optional description of your package",
+  "download_url": "https://example.com/package.zip",
+  "author": {
+    "name": "Author Name",
+    "homepage": "Author_homepage_or_mailto:email"
+  }
+}
 ```
-
-That's it!
-
-### content for package.toml
-Note: You can also use the package editor script to create and manage packs, and then move the file to the directory you want, for instance, assets/pkgs to publish on this repository, or as package.toml in your package directory for project metadata.
-```toml
-# Name. can contain spaces
-name = "Your Package Display Name"
-# Optional description
-description = ""
-# Direct URL to download, only required if you want to publish the package.
-download_url = "https://example.com/package.zip"
-# Author information
-[author]
-	name = "Author Name"
-	# Optional homepage key that specifies the website, or the email, of the author. If it is email, start with mailto:
-	homepage = "Author_homepage"
-```
-
----
 
 ## Publishing a package
-Once you have created a package, create a pull request to this repository to publish it with the following changes to this repository:
-- First, Copy your package's package.toml to assets/pkgs.
-- Next, rename the file as your package short name. A package short name cannot contain spaces, and must use underlines or dashes.
-
----
+To publish, submit a pull request to the official repository with these changes:
+- Copy your `package.json` to the `assets/pkgs` directory of the repository.
+- Rename the file to your **package short name** (e.g., `my-package.json`). The short name must not contain spaces; use underscores or dashes instead.
 
 ## Building NVGTPKG
-If you want to contribute code to NVGTPKG software, you will first know how to build.
-
-To build NVGT Package Manager software:
-- First, make sure you have [Python](https://www.python.org/) 3 and above installed.
-- Install the requirements.
-	```bash
-	pip install -r requirements.txt
-	```
-- Install PyInstaller.
-	```bash
-	pip install --upgrade pyinstaller
-	```
-- Lastly, run the following command from the root of the NVGTPKG repository:
-	```bash
-	pyinstaller --onefile --console nvgtpkg.py
-	```
+To build the software from source, ensure you have Python 3 installed, then:
+1. Install dependencies: `pip install -r requirements.txt`.
+2. Install PyInstaller: `pip install --upgrade pyinstaller`.
+3. Run the build command:
+```bash
+pyinstaller --onefile --console nvgtpkg.py
+```
 
 ## Contributing
-Contributions to NVGTPKG project are welcome, but please note the following things first:
-- Contributions to this project are expected to follow the [contributing guidelines](.github/CONTRIBUTING.md).
-- The NVGTPKG project is licensed under the terms of the MIT license. You may add credits to your contributed parts and scripts, but the general copyright notice is to remain the same.
+Contributions must follow the [contributing guidelines](.github/CONTRIBUTING.md) and are licensed under the MIT license. You may add credits to your specific scripts, but the general copyright notice must remain unchanged.

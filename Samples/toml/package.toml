@@ -1,5 +1,0 @@
-description = "A library to interact with TOML data"
-download_url = "https://harrymkt.github.io/nvgtpkg/files/toml.zip"
-[author]
-	name = "Harry Min Khant"
-	homepage = "https://harrymkt.github.io"

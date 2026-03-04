@@ -1,21 +1,21 @@
-{{- range resources.Match "pkgs/*.toml" }}
-{{- $tt := replace .Title "/pkgs/" "" }}
-{{- $tt = replace $tt ".toml" "" }}
-{{- $f := os.Stat (printf "assets/pkgs/%s.toml" $tt) }}
-{{- $d := dict }}
-{{- with $vv := . | transform.Unmarshal }}
-{{- $d = $vv }}
-{{- end }}
-{{- if $d }}
-{{- $p := dict
-	"kind" "page"
-	"dates" (dict "lastmod" $f.ModTime "date" $f.ModTime)
-	"lastmod" $f.ModTime
-	"params" (dict "toml" (dict "value" $d "short" $tt))
-	"path" $tt
-	"title" ($d.name | default $tt)
-	"layout" "pkg"
-}}
-{{- $.AddPage $p }}
-{{- end }}
+{{- range resources.Match "pkgs/*.json" }}
+	{{- $tt := replace .Title "/pkgs/" "" }}
+	{{- $tt = replace $tt ".json" "" }}
+	{{- $f := os.Stat (printf "assets/pkgs/%s.json" $tt) }}
+	{{- $d := dict }}
+	{{- with $vv := . | transform.Unmarshal }}
+		{{- $d = $vv }}
+	{{- end }}
+	{{- if $d }}
+		{{- $p := dict
+			"kind" "page"
+			"dates" (dict "lastmod" $f.ModTime "date" $f.ModTime)
+			"lastmod" $f.ModTime
+			"params" (dict "json" (dict "value" $d "short" $tt))
+			"path" $tt
+			"title" ($d.name | default $tt)
+			"layout" "pkg"
+		}}
+		{{- $.AddPage $p }}
+	{{- end }}
 {{- end }}

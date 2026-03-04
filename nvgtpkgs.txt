@@ -1,2 +1,0 @@
-# NVGTPKG Editor uses TOML as its format configuration tool.
-toml

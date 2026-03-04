@@ -1,10 +1,10 @@
 {{- define "title" }}
-{{- partial "title.html" (dict "titles" (slice .Title .FirstSection.Title) ) }}
+  {{- partial "title.html" (dict "titles" (slice .Title .FirstSection.Title) ) }}
 {{- end }}
 {{- define "main" }}
 <h1>{{ .Title }}</h1>
 {{- $d := dict }}
-{{- with .Params.toml }}
+{{- with .Params.json }}
 {{- $d = . }}
 {{- end }}
 {{- if $d }}

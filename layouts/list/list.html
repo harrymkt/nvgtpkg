@@ -1,10 +1,10 @@
 {{- define "title" }}
-{{ $titles := slice .Title }}
-{{- $paginator := partial "paginate.html" . }}
-{{- if and $paginator (gt $paginator.PageNumber 1) }}
-{{- $titles = $titles | append (printf " (page %v)" $paginator.PageNumber) }}
-{{- end }}
-{{- partial "title.html" (dict "titles" $titles) }}
+  {{- $titles := slice .Title }}
+  {{- $paginator := partial "paginate.html" . }}
+  {{- if and $paginator (gt $paginator.PageNumber 1) }}
+    {{- $titles = $titles | append (printf " (page %v)" $paginator.PageNumber) }}
+  {{- end }}
+  {{- partial "title.html" (dict "titles" $titles) }}
 {{- end }}
 {{- define "main" }}
 <h1>{{ .Title }}</h1>
@@ -14,9 +14,9 @@
 {{- $paginator := partial "paginate.html" . }}
 <p>{{ T "packnum" ($paginator.Pages | len | default 0) }}</p>
 {{- range $paginator.Pages }}
-<div>
-<h2><a href="{{ .RelPermalink }}">{{ .LinkTitle }}</a></h2>
-{{- $v := .Params.toml.value }}
+<div class="pkgitem">
+<h2><a href="{{ .Permalink }}">{{ .LinkTitle }}</a></h2>
+{{- $v := .Params.json.value }}
 {{- with $v.description }}
 <p>{{ . }}</p>
 {{- end }}
