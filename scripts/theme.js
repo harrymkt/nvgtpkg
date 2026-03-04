@@ -2,14 +2,6 @@
 JS functions for hguinav theme which is distributed under the terms of the MIT License
 */
 function ts_to_readable_time(timestamp, showsecond = false, ltext = '', show_full=true) {
-	/*
-	This function converts a given timestamp to human readable format.
-	Options:
-		timestamp(required): the timestamp to process.
-		showsecond(optional): should seconds be shown too even if minute/hour/day is greater than 0? This does not apply on show_full parameter if used.
-		ltext(optional): the text after the time. Usually this is recommended to add a space before the text, such as " ago".
-		show_full(optional): should the time be fully shown? If false, only the biggest value will be shown.
-	*/
 	var seconds = Math.floor(Date.now() / 1000) - Math.floor(timestamp / 1000);
 	var minutes = Math.floor(seconds / 60);
 	var hours = Math.floor(minutes / 60);
@@ -79,7 +71,6 @@ function normalize_iso_datetime(dateString) {
 }
 function local_datetime_string(date_input) {
 	var r = new Date(date_input);
-	if (!r) r = new Date(normalize_iso_datetime(date_input));
 	const options = {
 		weekday: "long", 
 		month: "long", 
@@ -97,10 +88,8 @@ function local_datetime_string(date_input) {
 	return final;
 }
 function get_timestamp(dateString) {
-	// Convert date string into a valid ISO format (inserting colon in the timezone)
-	const valid_dateString = normalize_iso_datetime(dateString);
-	// Create a new Date object from the valid date string
-	const date = new Date(valid_dateString);
+	// Create a new Date object
+	const date = new Date(dateString);
 	// Return the timestamp (milliseconds since epoch)
 	return date.getTime();
 }
