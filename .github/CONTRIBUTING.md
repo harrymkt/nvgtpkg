@@ -1,7 +1,7 @@
-# Contribution guidelines
+# Contribution Guidelines
 In the project, you should follow the code syntax clean and simple.
 
-## Code indentation
+## Code Indentation
 Code indentation should be used tabs instead of space.
 
 ### Good

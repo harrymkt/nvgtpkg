@@ -11,17 +11,17 @@ packstore = ""
 def install_package(package_name):
 	"""Install an NVGT package by downloading and extracting it."""
 	if package_name == None:
-		print("No package name")
+		print("No package name is provided")
 		return
 	data = get_url(f"https://raw.githubusercontent.com/harrymkt/nvgtpkg/main/{package_path}/{package_name}.json")
 	if isinstance(data, Exception):
 		if data == "":
-			print(f"Package {package_name} not found")
+			print(f"Package {package_name} could not be found")
 		else:
 			print(f"Failed to retrieve package {package_name}. {data}")
 		return
 	elif data == None:
-		print("No package data")
+		print("No package data found for this package")
 		return
 	pindex = json.loads(data)
 	package_url = pindex["download_url"]
@@ -98,9 +98,9 @@ def package_info(name, pg):
 def search_package(args):
 	package_name = args.name
 	if package_name == None:
-		print("No package name")
+		print("No package name is provided")
 		sys.exit(1)
-	print(f"Searching for package {package_name}")
+	print(f"Searching for package {package_name}...")
 	data = get_url(f"https://raw.githubusercontent.com/harrymkt/nvgtpkg/main/{package_path}/{package_name}.json")
 	if isinstance(data, Exception):
 		if data == "":
@@ -157,29 +157,29 @@ if __name__ == "__main__":
 	p.add_argument("-d", "-directory", dest = "directory", help = "Path to NVGT installation directory", default = os.path.dirname(shutil.which("nvgt")) if shutil.which("nvgt") else None)
 	sp = p.add_subparsers(title = "Commands", description= "Available commands")
 	install = sp.add_parser("install", help= "Install a package")
-	install.add_argument("-r", dest = "fn", help = "The file name to read the packages from", type = argparse.FileType("r"))
+	install.add_argument("-r", dest = "fn", help = "File name to read the packages from", type = argparse.FileType("r"))
 	install.add_argument("packages", help = "Names of the packages to install", action = "extend", nargs = "*")
 	install.set_defaults(func = install_packages)
 	listpacks = sp.add_parser("list", help = "List installed packages")
 	listpacks.set_defaults(func = list_installed_packages)
 	showpack = sp.add_parser("show", help = "Shows information about a given installed package")
-	showpack.add_argument("name", help = "The name of the package to search if it is installed")
+	showpack.add_argument("name", help = "Name of the package to search whether it is installed")
 	showpack.set_defaults(func = show_package)
-	searchpack = sp.add_parser("search", help = "Searches a package online without any installation")
-	searchpack.add_argument("name", help = "The name of the package to search for")
+	searchpack = sp.add_parser("search", help = "Searches a package online without installing")
+	searchpack.add_argument("name", help = "Name of the package to search for")
 	searchpack.set_defaults(func = search_package)
 	args = p.parse_args()
 	if not args.directory:
-		print("Error, NVGT installation directory cannot be determined. Please provide it with -d.")
+		print("Error, NVGT installation directory could not be determined. Please provide it with -d argument.")
 		sys.exit(1)
 	packstore = args.directory
 	if not os.path.isdir(packstore): packstore = os.path.dirname(args.directory)
 	if not packstore or not os.path.exists(packstore):
-		print("Error, NVGT installation directory cannot be determined")
+		print("Error, NVGT installation directory could not be determined due to invalid or nonexistent path")
 		sys.exit(1)
 	packstore = os.path.join(packstore, "include")
 	if not os.path.exists(packstore):
-		print("Error, NVGT has no include directory")
+		print("Error, NVGT does not have the include directory")
 		sys.exit(1)
 	if hasattr(args, "func"):
 		args.func(args)

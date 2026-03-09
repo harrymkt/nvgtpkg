@@ -1,5 +1,0 @@
-baseURL: "https://harrymkt.github.io/nvgtpkg"
-title: "NVGT Package Manager"
-cleanDestinationDir: true
-publishDir: HTML
-theme: hguinav
